@@ -1,0 +1,24 @@
+{
+  "name": "@femto-host/auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/femto-host/auth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/femto-host/auth/issues"
+  },
+  "homepage": "https://github.com/femto-host/auth#readme",
+  "dependencies": {
+    "@femto-host/config": "^1.0.0",
+    "node-fetch": "^2.3.0"
+  }
+}
