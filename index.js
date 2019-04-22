@@ -17,7 +17,7 @@ const fetch = require('node-fetch')
  *         action: ['hoster:DeleteObject', 'hoster:UpdateObject'],
  *         resource: 'hoster:object:*',
  *         condition: {
- *             'owns hosted image': { $ensure: 'resource.owner._id == user._id' }
+ *             'owns hosted image': { %ensure: 'resource.owner._id == user._id' }
  *         }
  *     }
  * ])
@@ -70,7 +70,7 @@ class Auth {
             action: ['hoster:DeleteObject', 'hoster:UpdateObject'],
             resource: 'hoster:object:*',
             condition: {
-                'owns hosted image': { $ensure: 'resource.owner._id == user._id' }
+                'owns hosted image': { %ensure: 'resource.owner._id == user._id' }
             }
         }
     ])
