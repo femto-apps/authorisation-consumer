@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/femto-host/auth#readme",
   "dependencies": {
+    "@femto-apps/config": "^1.0.0",
     "@femto-host/config": "^1.0.0",
     "node-fetch": "^2.3.0"
   }

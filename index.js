@@ -1,4 +1,4 @@
-const config = require('@femto-host/config')
+const config = require('@femto-apps/config')
 const fetch = require('node-fetch')
 
 /**
@@ -17,21 +17,21 @@ const fetch = require('node-fetch')
  *         action: ['hoster:DeleteObject', 'hoster:UpdateObject'],
  *         resource: 'hoster:object:*',
  *         condition: {
- *             'owns hosted image': { %ensure: 'resource.owner._id == user._id' }
+ *             'owns hosted image': { '%ensure': 'resource.owner._id == user._id' }
  *         }
  *     }
  * ])
  */
 class Auth {
-    constructor({ url, key }) {
+    constructor({ url, secret }) {
         this.url = url
-        this.key = key
+        this.secret = secret
     }
 
     registerStatement(statement) {
-        return fetch(`${this.url}/api/v1/statement`, {
+        return fetch(`${this.url}/api/statement`, {
             method: 'POST',
-            body: JSON.stringify(statement),
+            body: JSON.stringify(Object.assign({}, { statements: statement }, { secret: this.secret })),
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ class Auth {
     }
 
     authorised(resource, user, action) {
-        return fetch(`${this.url}/api/v1/authorised`, {
+        return fetch(`${this.url}/api/authorised`, {
             method: 'POST',
             body: JSON.stringify({ resource, user, action }),
             headers: {
@@ -58,19 +58,21 @@ class Auth {
 }
 
 ;(async () => {
-    const auth = new Auth({ url: 'http://localhost:9031', key: 'abcd' })
+    const auth = new Auth({ url: 'http://localhost:9031', secret: '73628923-7201-4632-b209-82aef30ec436' })
     await auth.registerStatements([
         {
+            id: 'Allow get by anybody',
             effect: 'allow',
             action: 'hoster:GetObject',
             resource: 'hoster:object:*'
         },
         {
+            id: 'Allow delete / update own object',
             effect: 'allow',
             action: ['hoster:DeleteObject', 'hoster:UpdateObject'],
             resource: 'hoster:object:*',
             condition: {
-                'owns hosted image': { %ensure: 'resource.owner._id == user._id' }
+                'owns hosted image': { '%ensure': 'resource.owner._id == user._id' }
             }
         }
     ])
